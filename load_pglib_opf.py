@@ -122,9 +122,6 @@ def infer_types(df):
     return pd.read_csv(io.StringIO(df.to_csv(index=False)))
 
 
-bus_data, gen_data, branch_data = load_pglib_opf("pglib-opf/pglib_opf_case30_ieee.m")
-g = to_networkx(bus_data, gen_data, branch_data)
-
 if __name__ == "__main__":
     """
     Test loading all pglib_opf_*.m instances.
