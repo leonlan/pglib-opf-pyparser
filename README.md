@@ -15,9 +15,10 @@ python3 load_pglib_opf.py
 ```
 
 ## Todos
-- [ ] Create `pandapowerNet` and `networkx` objects;
+- [ ] Create `pandapowerNet`;
+- [x] Create `networkx` objects;
 - [ ] Create a parser class;
 
 ## References
 - [1] Power Grid Lib - Optimal Power Flow (pglib-opf) https://github.com/power-grid-lib/pglib-opf
-- [2] MATPOWER manual https://matpower.org/docs/MATPOWER-manual.pdf
+- [2] MATPOWER manual: Appendix B Data File Format https://matpower.org/docs/MATPOWER-manual.pdf

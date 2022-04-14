@@ -76,12 +76,45 @@ def parse_generator_data(generator_rows, generator_cost_rows):
         for i in range(1, len(generator_rows))
     ]
 
-    return pd.DataFrame(columns=headers, data=data_rows)
+    return pd.DataFrame(columns=headers, data=data_rows, dtype=object)
 
 
 def parse_branch_data(rows):
-    return pd.DataFrame(columns=rows[0], data=rows[1:])
+    df = pd.DataFrame(columns=rows[0], data=rows[1:])
+    df["line_idx"] = df.index
+    return df
 
+
+def to_networkx(bus_data, gen_data, branch_data):
+    """
+    Makes a networkx instance from the passed-in data.
+    """
+    import networkx as nx
+
+    G = nx.from_pandas_edgelist(
+        branch_data,
+        source="fbus",
+        target="tbus",
+        edge_attr=True,
+        create_using=nx.MultiDiGraph,
+        edge_key="line_idx",
+    )
+
+    busdict = bus_data.set_index("bus_i").T.to_dict()
+
+    # We add an extra attribute 'generator_data' dict to each bus
+    # which is empty of there is no generator
+    gendict = gen_data.set_index("bus").T.to_dict()
+    for key, data in busdict.items():
+        data["generator_data"] = gendict.get(key, {})
+
+    nx.set_node_attributes(G, busdict)
+
+    return G
+
+
+bus_data, gen_data, branch_data = load_pglib_opf("pglib-opf/pglib_opf_case30_ieee.m")
+g = to_networkx(bus_data, gen_data, branch_data)
 
 if __name__ == "__main__":
     """
