@@ -15,7 +15,7 @@ python3 load_pglib_opf.py
 ```
 
 ## Todos
-- [ ] Create `pandapower` and `networkx` objects;
+- [ ] Create `pandapowerNet` and `networkx` objects;
 - [ ] Create a parser class;
 
 ## References
