@@ -1,10 +1,12 @@
 # pglib-opf-pyparser
 ## Introduction
-This script reads a power network instance from pglib-opf [1]. It takes
+The script `load_pglib_opf` reads a power network instance from pglib-opf [1]. It takes
 as input a `pglib_opf_*.m` file and returns a pandas `DataFrame` for three tables:
 - the bus data
 - the generator and generator cost data
 - the branch data
+
+Moreover, using `to_network` you can create a networkx graph from the dataframes.
 
 Check [2] for a description of the Data File Format.
 
@@ -15,8 +17,9 @@ python3 load_pglib_opf.py
 ```
 
 ## Todos
-- [ ] Create `pandapowerNet`;
 - [x] Create `networkx` objects;
+- [ ] Create `pandapowerNet`;
+  - This one is pretty difficult, because pandapower uses different parameters than what Matpower provides. The best way to implement this is by looking at [pandapower.converter.matpower](https://github.com/e2nIEE/pandapower/blob/v2.0.1/pandapower/converter/matpower/from_mpc.py). 
 - [ ] Create a parser class;
 
 ## References
